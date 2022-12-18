@@ -7,7 +7,7 @@ create table player(
                        id serial PRIMARY KEY,
                        name varchar,
                        number int,
-                       id_team int REFERENCES team(id)
+                       team_id int REFERENCES team(id)
 );
 
 create table sponsor(
@@ -16,7 +16,19 @@ create table sponsor(
 );
 
 create table have(
-                        id_team int REFERENCES team(id),
-                        id_sponsor int REFERENCES sponsor(id)
+                        team_id int REFERENCES team(id),
+                        sponsor_id int REFERENCES sponsor(id)
 );
 
+create table play_against(
+                        id serial primary key ,
+                        datetime date,
+                        stadium varchar,
+                        team_id int REFERENCES team(id),
+                        team_opponent_id int REFERENCES team(id)
+);
+
+create table team_players(
+                        team_entity_id int REFERENCES team(id),
+                        players_id int REFERENCES player(id)
+);
