@@ -1,165 +1,74 @@
-openapi: 3.0.3
-info:
-  title: Foot spec
-  description: Foot spec
-  version: 1.0.0
+openapi: 3.0.0
 servers:
-  - url: 'https://petstore3.swagger.io/api/v3'
-tags:
-  - name: Match
-  - name: Player
-  - name: Team
-
+  - url: https://api.com
+info:
+  version: latest
+  title: PROG3 - TD2
 paths:
-  /matchs:
+  /matches:
     get:
       tags:
-        - Match
-      summary: List of all matchs
-      operationId: getAllMatchs
+        - Matches
+      summary: Get all matches
+      operationId: getMatches
       responses:
-        200:
-          description: 'OK'
+        '200':
+          description: List of Matches
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PlayAgainst'
-
-        400:
-          description: 'BAD REQUEST'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/responses/Bad_request'
-  /team:
-    get:
-      tags:
-        - Team
-      summary: Get All team and its sponsors and players
-      operationId: getAllTeam
-      responses:
-        200:
-          description: 'OK'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Have'
-        400:
-          description: 'BAD REQUEST'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/responses/Bad_request'
-
-  /players:
-    get:
-      tags:
-        - Player
-      summary: get players
-      operationId: getAllPLayers
-      responses:
-        200:
-          description: 'OK'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Player'
-        400:
-          description: 'BAD REQUEST'
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/responses/Bad_request'
+                  $ref: '#/components/schemas/Match'
 components:
-  responses:
-    Bad_request:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: "Please verify your request"
-
   schemas:
-    Player:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 2
-        name:
-          type: string
-          example: 'Leonel Messi'
-
     Team:
       type: object
       properties:
         id:
           type: integer
-          example: 1
         name:
           type: string
-          example: 'Paris Saint Germain'
-
-    TeamOpponent:
+    Player:
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        isGuardian:
+          type: boolean
+    Match:
       type: object
       properties:
         id:
           type: integer
-          example: 2
-        name:
-          type: string
-          example: 'FC Barcelone'
-
-    Sponsor:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: 'Qatar Airways'
-
-    PlayAgainst:
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 1
-        team_id:
-          $ref: '#/components/schemas/Team'
-        team_opponent_id:
-          $ref: '#/components/schemas/TeamOpponent'
         datetime:
           type: string
-          format: date
-
-    Have:
+          format: datetime
+        stadium:
+          type: string
+        teamHome:
+          allOf:
+            - $ref: '#/components/schemas/PlayedTeam'
+        teamAway:
+          allOf:
+            - $ref: '#/components/schemas/PlayedTeam'
+    PlayedTeam:
+      allOf:
+        - $ref: '#/components/schemas/Team'
+      properties:
+        goals:
+          type: integer
+        scorers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Scorers'
+    Scorers:
       type: object
       properties:
-        id:
-          type: integer
-          example: 10
-        team:
-          $ref: '#/components/schemas/Team'
-        sponsor:
-          $ref: '#/components/schemas/Sponsor'
-        players:
+        player:
           $ref: '#/components/schemas/Player'
-
+        isOG:
+          type: boolean
+        scoreTime:
+          type: integer

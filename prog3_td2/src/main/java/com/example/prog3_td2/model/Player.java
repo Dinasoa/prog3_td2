@@ -20,6 +20,7 @@ public class Player {
     private int id;
     private String name;
     private int number;
+    private String position;
     @OneToMany
     @Column(name = "id_team")
     private List<Team> teamList;

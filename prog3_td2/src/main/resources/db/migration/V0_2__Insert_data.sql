@@ -16,4 +16,11 @@ values (current_timestamp, 'Camp Nou', 1, 2);
 insert into have(team_id, sponsor_id)
 VALUES (1, 1),
        (1, 2),
-       (2, 1);
+       (2, 1)
+
+insert into goals(id)
+VALUES (1),(2),(3);
+
+insert into score(players_id, goal, scoring_time)
+VALUES (1 , 1 , 10)
+       (2 , 1 , 20);

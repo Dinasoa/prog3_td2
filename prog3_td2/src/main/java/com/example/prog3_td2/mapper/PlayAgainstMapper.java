@@ -14,7 +14,7 @@ public class PlayAgainstMapper {
     public PlayAgainstRest toRest (PlayAgainst domain){
         return PlayAgainstRest.builder()
                 .id(domain.getId())
-                .team_opponent(mapper.toRest(domain.getTeam_opponent()))
+                .team_opponent(mapper.toRest(domain.getTeamOpponent()))
                 .team(mapper.toRest(domain.getTeam()))
                 .build();
     }
